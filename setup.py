@@ -17,5 +17,7 @@ setup(
         'matplotlib',
         'scipy',
         'shapely'
+        'tensorflow>=2.0'
+        'tensorflow_probability'
     ]
 )
