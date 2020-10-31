@@ -1,0 +1,2 @@
+model_checkpoint_path: "docker2_"
+all_model_checkpoint_paths: "docker2_"
