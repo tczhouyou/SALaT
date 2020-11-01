@@ -13,7 +13,7 @@ latent_loss_tracker = keras.metrics.Mean(name="latent_loss")
 single_ent_tracker = keras.metrics.Mean(name="single_ent")
 total_ent_tracker = keras.metrics.Mean(name="total_ent")
 
-kernel_initializer = initializers.RandomUniform(minval=-1e-1, maxval=1e-1)
+kernel_initializer = initializers.RandomUniform(minval=-1e-3, maxval=1e-3)
 kernel_regularizer = None
 
 def cov_f(x0, x1, l, sigf):

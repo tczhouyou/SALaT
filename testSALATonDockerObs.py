@@ -14,8 +14,8 @@ import numpy as np
 from obs_avoid_envs import ObsExp, checkDocking, ObsSet2D
 import matplotlib.pyplot as plt
 from numpy.random import seed
-seed(10)
-tf.random.set_seed(10)
+seed(100)
+tf.random.set_seed(100)
 
 timesteps = 30
 dim = 2
@@ -73,7 +73,7 @@ obs.add_circle_obs(origin=[0,0], radius=4)
 
 fig, axes = plt.subplots(1,3)
 latent_dist_to_sample = constructGP(timesteps, 1, 0.01, 0.01)
-fig.suptitle('Recurrent RealNVP Generated Local Trajectories', fontsize=16)
+#fig.suptitle('Recurrent RealNVP Generated Local Trajectories', fontsize=16)
 
 qobj3 = trqueries[:,6:9]
 latent_traj3, local_traj3, global_traj3 = train_model(model3, qobj3, trtrajs, train_epochs=10000,
@@ -105,11 +105,11 @@ latent_local_global_traj = np.concatenate([latent_traj, local_traj, global_traj]
 
 struct={'decision_layers':[10],
           'num_frame': 3,
-          'd_act': 'LeakyReLU',
+          'd_act': 'tanh',
           'beta': 1,
           'is_bidirectional': True}
-amodel = RecurrentAttentionModel(nframe=3, struct=struct, single_ent_weight=100, total_ent_weight=1000, ldim=2,
-                                 use_variance_weight=True, adjust_ratio=8, smooth_loss_weight=100)
+amodel = RecurrentAttentionModel(nframe=3, struct=struct, single_ent_weight=1, total_ent_weight=10, ldim=2,
+                                 use_variance_weight=True, adjust_ratio=10, smooth_loss_weight=1)
 #amodel.compile(opt=keras.optimizers.Adam(learning_rate=0.0003))
 #amodel.fit(latent_local_global_traj, trtrajs, shuffle=False, verbose=1, epochs=20000, batch_size=np.shape(trqueries)[0])
 amodel.load_weights('models/salat_docker_obs/attention')
