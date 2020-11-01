@@ -1,4 +1,4 @@
-import os, inspect, sys
+import os, inspect
 
 use_cpu = True
 if use_cpu:
@@ -13,9 +13,11 @@ from SALAT import RecurrentNVP2DModel, RecurrentAttentionModel, train_model, use
 import numpy as np
 from obs_avoid_envs import ObsExp, checkDocking, ObsSet2D
 import matplotlib.pyplot as plt
+
+
 from numpy.random import seed
-seed(100)
-tf.random.set_seed(100)
+seed(50)
+tf.random.set_seed(50)
 
 timesteps = 30
 dim = 2
@@ -73,7 +75,7 @@ obs.add_circle_obs(origin=[0,0], radius=4)
 
 fig, axes = plt.subplots(1,3)
 latent_dist_to_sample = constructGP(timesteps, 1, 0.01, 0.01)
-#fig.suptitle('Recurrent RealNVP Generated Local Trajectories', fontsize=16)
+fig.suptitle('Recurrent RealNVP Generated Local Trajectories', fontsize=16)
 
 qobj3 = trqueries[:,6:9]
 latent_traj3, local_traj3, global_traj3 = train_model(model3, qobj3, trtrajs, train_epochs=10000,
@@ -96,7 +98,6 @@ latent_traj2, local_traj2, global_traj2 = train_model(model2, qobj2, trtrajs, tr
 
 plt.pause(0.1)
 
-
 latent_traj = np.concatenate([latent_traj1, latent_traj2, latent_traj3], axis=-1)
 local_traj = np.concatenate([local_traj1, local_traj2, local_traj3], axis=-1)
 global_traj = np.concatenate([global_traj1, global_traj2, global_traj3], axis=-1)
@@ -109,7 +110,7 @@ struct={'decision_layers':[10],
           'beta': 1,
           'is_bidirectional': True}
 amodel = RecurrentAttentionModel(nframe=3, struct=struct, single_ent_weight=1, total_ent_weight=10, ldim=2,
-                                 use_variance_weight=True, adjust_ratio=10, smooth_loss_weight=1)
+                                 use_variance_weight=True, adjust_ratio=8, smooth_loss_weight=5)
 #amodel.compile(opt=keras.optimizers.Adam(learning_rate=0.0003))
 #amodel.fit(latent_local_global_traj, trtrajs, shuffle=False, verbose=1, epochs=20000, batch_size=np.shape(trqueries)[0])
 amodel.load_weights('models/salat_docker_obs/attention')
@@ -135,7 +136,6 @@ plt.plot(outs[0, :, 1], 'b-')
 plt.plot(outs[0, :, 2], 'g-')
 plt.pause(0.1)
 
-print(outs[0,:,:])
 obsExp = ObsExp(exp_name="DockingWithObs")
 envs = obsExp.get_envs(tequeries)
 fig, axes = plt.subplots(4, 5)

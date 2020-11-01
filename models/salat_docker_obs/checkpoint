@@ -1,2 +1,2 @@
-model_checkpoint_path: "docker2_"
-all_model_checkpoint_paths: "docker2_"
+model_checkpoint_path: "attention"
+all_model_checkpoint_paths: "attention"
