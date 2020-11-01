@@ -1,2 +1,2 @@
-model_checkpoint_path: "obs_"
-all_model_checkpoint_paths: "obs_"
+model_checkpoint_path: "attention"
+all_model_checkpoint_paths: "attention"

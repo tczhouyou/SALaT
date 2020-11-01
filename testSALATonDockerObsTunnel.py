@@ -13,8 +13,8 @@ from obs_avoid_envs import ObsExp, checkDockingReturn, ObsSet2D
 import matplotlib.pyplot as plt
 import tensorflow as tf
 from numpy.random import seed
-seed(100)
-tf.random.set_seed(100)
+seed(50)
+tf.random.set_seed(50)
 
 timesteps = 100
 dim = 2
@@ -46,10 +46,10 @@ struct = {'s1_layers': [20, 1],
 model1 = RecurrentNVP2DModel(scope='obj1', struct=struct, ldim=2, latent_dist=latent_dist, timestamps=timesteps, reprod_ratio=0)
 model1.compile(latent_opt=keras.optimizers.Adam(learning_rate=0.001))
 
-struct = {'s1_layers': [40, 1],
-          't1_layers': [40, 1],
-          's2_layers': [40, 1],
-          't2_layers': [40, 1],
+struct = {'s1_layers': [20, 1],
+          't1_layers': [20, 1],
+          's2_layers': [20, 1],
+          't2_layers': [20, 1],
           's_act': 'tanh',
           't_act': 'tanh',
           'is_bidirectional': True}
@@ -77,14 +77,12 @@ fig, axes = plt.subplots(1,3)
 latent_dist_to_sample = constructGP(timesteps, 2, 1e-2, 1e-3)
 fig.suptitle('Recurrent RealNVP Generated Local Trajectories', fontsize=16)
 
-
 qobj1 = trqueries[:, 0:3]
 latent_traj1, local_traj1, global_traj1 = train_model(model1, qobj1, trtrajs, train_epochs=10000,
                                                       ax=axes[0], obj=docker,latent_dist=latent_dist_to_sample,
                                                       model_file ='models/salat_docker_obs_tunnel/docker1', plot_title='start/end docker')
 
 plt.pause(0.1)
-
 
 qobj2 = trqueries[:,3:6]
 latent_traj2, local_traj2, global_traj2 = train_model(model2, qobj2, trtrajs, train_epochs=10000,
@@ -93,7 +91,6 @@ latent_traj2, local_traj2, global_traj2 = train_model(model2, qobj2, trtrajs, tr
 
 plt.pause(0.1)
 
-
 qobj3 = trqueries[:,6:9]
 latent_traj3, local_traj3, global_traj3 = train_model(model3, qobj3, trtrajs, train_epochs=10000,
                                                       ax=axes[2], obj=obs,latent_dist=latent_dist_to_sample,
@@ -101,12 +98,10 @@ latent_traj3, local_traj3, global_traj3 = train_model(model3, qobj3, trtrajs, tr
 
 plt.pause(0.1)
 
-
 ####### train attention model #######
 latent_traj = np.concatenate([latent_traj1, latent_traj2, latent_traj3], axis=-1)
 local_traj = np.concatenate([local_traj1, local_traj2, local_traj3], axis=-1)
 global_traj = np.concatenate([global_traj1, global_traj2, global_traj3], axis=-1)
-
 latent_local_global_traj = np.concatenate([latent_traj, local_traj, global_traj], axis=-1)
 
 struct={'decision_layers':[20],
@@ -115,9 +110,9 @@ struct={'decision_layers':[20],
           'beta': 1,
           'is_bidirectional': True}
 amodel = RecurrentAttentionModel(nframe=3, struct=struct, single_ent_weight=1, total_ent_weight=10, ldim=2,
-                                 use_variance_weight=True, adjust_ratio=8, smooth_loss_weight=5)
-# amodel.compile(opt=keras.optimizers.Adam(learning_rate=0.0001))
-# amodel.fit(latent_local_global_traj, trtrajs, shuffle=False, verbose=1, epochs=10000, batch_size=np.shape(trqueries)[0])
+                                 use_variance_weight=True, adjust_ratio=20, smooth_loss_weight=5)
+#amodel.compile(opt=keras.optimizers.Adam(learning_rate=0.001))
+#amodel.fit(latent_local_global_traj, trtrajs, shuffle=False, verbose=1, epochs=10000, batch_size=np.shape(trqueries)[0])
 amodel.load_weights('models/salat_docker_obs_tunnel/attention')
 
 ####### get test trajs #######
@@ -137,6 +132,7 @@ ttrajs, outs = amodel.get_combined_trajs(test_global_trajs, test_latent_trajs, t
 
 fig = plt.figure()
 fig.suptitle('Attention Model', fontsize=16)
+
 plt.plot(outs[0, :, 0], 'r-')
 plt.plot(outs[0, :, 1], 'b-')
 plt.plot(outs[0, :, 2], 'g-')
@@ -179,12 +175,3 @@ for id in range(20):
 failure, _ = checkDockingReturn(trajs=ttrajs, tequeries=tequeries, samples=1000, orig_samples=timesteps, exp_name="DockingWithObsReturn")
 print('success rate: {}'.format(1 - failure/np.shape(tequeries)[0]))
 plt.show()
-
-
-fname = '/common/homes/staff/zhou/Projects/lamp/experiments/results_dockingReturn/salat/dockingReturn_result4/testTraj_'
-for i in range(np.shape(ttrajs)[0]):
-    tetraj = ttrajs[i,:,:]
-    cfname = fname + str(i) + '.csv'
-    np.savetxt(cfname, tetraj, delimiter=',')
-
-np.savetxt('/common/homes/staff/zhou/Projects/lamp/experiments/results_dockingReturn/attention_salat', outs[0,:,:], delimiter=',')
