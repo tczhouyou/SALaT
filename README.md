@@ -1,7 +1,7 @@
 # SALaT
 
 ## Introduction
-We created a model that lets robot learn how to shift attention from one object to others to accomplish the task. The model consists of latent transformations and an attention model. We use real-valued volume-preserving mapping (RealNVP)[1] to model the mappings and use gated recurrent units for the attention model.
+We created a model that lets robot learn how to shift attention from one object to others to accomplish the task. The model consists of latent transformations and an attention model. We use real-valued volume-preserving mapping (RealNVP)[[1]](#1) to model the mappings and use gated recurrent units for the attention model.
 
 The code is associated with the paper "Learning to Shift Attention for Motion Generation"
 
@@ -24,5 +24,7 @@ For the docker-obstacle experiment, run:
 For the docker-obstacle-tunnel experiment, run:
 `python testSALATOnDockerObsTunnel.py`
 
+## References
+<a id="1">[1]</a> 
+Laurent Dinh, Jascha Sohl-Dickstein, Samy Bengio. "Density estimation using Real NVP" (https://arxiv.org/abs/1605.08803)
 
-[1] 
