@@ -20,7 +20,9 @@ For setting up other necessary packages, run:
 
 ## Experiments
 
-The repo contains the simulated experiments described in Sec.IV. With the pre-trained model, we can reproduce the result listed in TABLE 1.
+The repo contains the simulated experiments described in Sec.IV of the paper. 
+
+With the pre-trained models, we can reproduce the result listed in TABLE 1 of the paper.
 
 For the docker experiment, run:
 `python testSALATOnDocker.py`
