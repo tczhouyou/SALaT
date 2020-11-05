@@ -286,7 +286,7 @@ def train_model(model, query, trtrajs, latent_dist=None, train_epochs=1000, ax=N
     gen_local_traj = model.__revert_local_trajs__(mean_latent_traj)
     gen_global_traj = get_global_trajs(transform_to_global, gen_local_traj)
     if ax is not None and latent_dist is not None:
-        sampled_latent_traj = model.sample_latent_trajs(batch_size, latent_dist)
+        sampled_latent_traj = mean_latent_traj + model.sample_latent_trajs(batch_size, latent_dist)
         sampled_local_traj = model.__revert_local_trajs__(sampled_latent_traj)
         if obj is not None:
             obj.plot(ax)
