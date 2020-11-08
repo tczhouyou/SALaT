@@ -5,6 +5,7 @@ if use_cpu:
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"   # see issue #152
     os.environ["CUDA_VISIBLE_DEVICES"] = ""
 
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 os.sys.path.insert(0, current_dir)
 from tensorflow import keras
@@ -113,7 +114,7 @@ amodel = RecurrentAttentionModel(nframe=3, struct=struct, single_ent_weight=1, t
                                  use_variance_weight=True, adjust_ratio=8, smooth_loss_weight=5)
 #amodel.compile(opt=keras.optimizers.Adam(learning_rate=0.0003))
 #amodel.fit(latent_local_global_traj, trtrajs, shuffle=False, verbose=1, epochs=20000, batch_size=np.shape(trqueries)[0])
-amodel.load_weights('models/salat_docker_obs/attention')
+amodel.load_weights('models/salat_docker_obs/attention').expect_partial()
 
 ### test ###
 latent_traj1 = np.tile(np.expand_dims(latent_traj1[0,:,:], axis=0), reps=[np.shape(tequeries)[0], 1, 1])
@@ -167,7 +168,9 @@ for id in range(20):
     ax.set_ylim(-5, 35)
     ax.set_aspect('equal')
 
-plt.show()
+plt.pause(0.1)
 
 failure, _ = checkDocking(trajs=ttrajs, tequeries=tequeries, samples=1000, orig_samples=timesteps, exp_name="DockingWithObs")
 print('success rate: {}'.format(1 - failure/np.shape(tequeries)[0]))
+
+plt.show()

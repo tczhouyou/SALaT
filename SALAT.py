@@ -271,8 +271,7 @@ def train_model(model, query, trtrajs, latent_dist=None, train_epochs=1000, ax=N
     local_traj = get_local_trajs(transform_to_local, trtrajs)
 
     if model_file is not None:
-        print('load the model')
-        model.load_weights(model_file)
+        model.load_weights(model_file).expect_partial()
     else:
         model.fit(query, local_traj, shuffle=False, verbose=1, epochs=train_epochs, batch_size=np.shape(query)[0])
         if save_file is not None:

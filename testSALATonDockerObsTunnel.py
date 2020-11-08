@@ -4,6 +4,7 @@ if use_cpu:
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"   # see issue #152
     os.environ["CUDA_VISIBLE_DEVICES"] = ""
 
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 os.sys.path.insert(0, current_dir)
 from tensorflow import keras
@@ -113,7 +114,7 @@ amodel = RecurrentAttentionModel(nframe=3, struct=struct, single_ent_weight=1, t
                                  use_variance_weight=True, adjust_ratio=20, smooth_loss_weight=5)
 #amodel.compile(opt=keras.optimizers.Adam(learning_rate=0.001))
 #amodel.fit(latent_local_global_traj, trtrajs, shuffle=False, verbose=1, epochs=10000, batch_size=np.shape(trqueries)[0])
-amodel.load_weights('models/salat_docker_obs_tunnel/attention')
+amodel.load_weights('models/salat_docker_obs_tunnel/attention').expect_partial()
 
 ####### get test trajs #######
 
