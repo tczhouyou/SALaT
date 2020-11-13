@@ -13,7 +13,7 @@ The code provides supplementary materials for the paper "_Learning to Shift Atte
 
 ## Setup
 The code was tested with tensorflow 2.0. 
-Install the tensorflow environment by following https://www.tensorflow.org/install/pip:
+Install the tensorflow environment (https://www.tensorflow.org/install/pip) by following steps:
 
 Create a new virtual environment by choosing a Python interpreter and making a ./venv directory to hold it:
 
