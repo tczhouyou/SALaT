@@ -13,10 +13,27 @@ The code provides supplementary materials for the paper "_Learning to Shift Atte
 
 ## Setup
 The code was tested with tensorflow 2.0. 
-Install the tensorflow environment by following https://www.tensorflow.org/install/pip
+Install the tensorflow environment by following https://www.tensorflow.org/install/pip:
+
+Create a new virtual environment by choosing a Python interpreter and making a ./venv directory to hold it:
+
+`$ python3 -m venv --system-site-packages ./venv`
+
+Activate the virtual environment using a shell-specific command:
+
+`$ source ./venv/bin/activate` 
+
+When the virtual environment is active, your shell prompt is prefixed with (venv).
+Install packages within a virtual environment without affecting the host system setup. Start by upgrading pip:
+
+`(venv) $ pip install --upgrade pip`
+
+`(venv) $ pip install --upgrade tensorflow`
+
 
 For setting up other necessary packages, run:
-`python setup.py install`
+
+`(venv) $ python setup.py install`
 
 ## Experiments
 
@@ -25,13 +42,13 @@ The repo contains the simulated experiments described in Sec.IV of the paper.
 With the pre-trained models, we can reproduce the result listed in TABLE 1 of the paper.
 
 For the docker experiment, run:
-`python testSALATOnDocker.py`
+`(venv) $ python testSALATOnDocker.py`
 
 For the docker-obstacle experiment, run:
-`python testSALATOnDockerObs.py`
+`(venv) $ python testSALATOnDockerObs.py`
 
 For the docker-obstacle-tunnel experiment, run:
-`python testSALATOnDockerObsTunnel.py`
+`(venv) $ python testSALATOnDockerObsTunnel.py`
 
 ## References
 <a id="1">[1]</a> 
