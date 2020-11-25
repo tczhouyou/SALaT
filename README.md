@@ -12,7 +12,7 @@ We use _real valued non volume-preserving mapping_ (RealNVP)[[1]](#1) to model t
 The code provides supplementary materials for the paper "_Learning to Shift Attention for Motion Generation_"
 
 ## Setup
-The code was tested with tensorflow 2.0. 
+The code requires **tensorflow 2.2 or later**. 
 Install the tensorflow environment (https://www.tensorflow.org/install/pip) by following steps:
 
 Create a new virtual environment by choosing a Python interpreter and making a ./venv directory to hold it:
