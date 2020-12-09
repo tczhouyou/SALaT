@@ -13,10 +13,10 @@ setup(
     ],
     python_requires='>=3.6',
     install_requires=[
-        'numpy',
-        'matplotlib',
-        'scipy',
-        'shapely',
+        'numpy==1.18.5',
+        'matplotlib==3.3.3',
+        'scipy==1.5.4',
+        'shapely==1.7.1',
         'tensorflow_probability==0.11'
     ]
 )
