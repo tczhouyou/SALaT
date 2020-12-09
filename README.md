@@ -16,23 +16,16 @@ The code requires **tensorflow 2.2 or later**. (**Note: Because of recent update
 
 Install the tensorflow environment (https://www.tensorflow.org/install/pip) by following steps:
 
-Create a new virtual environment by choosing a Python interpreter and making a ./venv directory to hold it:
-
 `$ python3 -m venv --system-site-packages ./venv`
 
-Activate the virtual environment using a shell-specific command:
-
 `$ source ./venv/bin/activate` 
-
-When the virtual environment is active, your shell prompt is prefixed with (venv).
-Install packages within a virtual environment without affecting the host system setup. Start by upgrading pip:
 
 `(venv) $ pip install --upgrade pip`
 
 `(venv) $ pip install --upgrade tensorflow`
 
 
-For setting up other necessary packages, run:
+For setting up other necessary packages, run in the project folder:
 
 `(venv) $ python setup.py install`
 
