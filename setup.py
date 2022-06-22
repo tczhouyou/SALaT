@@ -13,7 +13,7 @@ setup(
     ],
     python_requires='>=3.6',
     install_requires=[
-        'numpy==1.18.5',
+        'numpy==1.22.0',
         'matplotlib==3.3.3',
         'scipy==1.5.4',
         'shapely==1.7.1',
