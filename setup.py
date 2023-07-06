@@ -15,7 +15,7 @@ setup(
     install_requires=[
         'numpy==1.18.5',
         'matplotlib==3.3.3',
-        'scipy==1.5.4',
+        'scipy==1.10.0',
         'shapely==1.7.1',
         'tensorflow_probability==0.11'
     ]
